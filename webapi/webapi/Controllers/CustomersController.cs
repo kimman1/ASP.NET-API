@@ -54,14 +54,18 @@ namespace webapi.Controllers
       
         // PUT: api/Customers/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCustomer(Customer customer)
+        public IHttpActionResult PutCustomer(CustomerViewModel customer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.Entry(customer).State = EntityState.Modified;
+            Customer cus = new Customer();
+            cus.CustomerID = customer.CustomerID;
+            cus.Name = customer.CustomerName;
+            cus.Phone = customer.CustomerPhone;
+            cus.Address = customer.CustomerAddress;
+            db.Entry(cus).State = EntityState.Modified;
 
             try
             {
@@ -72,7 +76,7 @@ namespace webapi.Controllers
               throw;  
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
         // POST: api/Customers

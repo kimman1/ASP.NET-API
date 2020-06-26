@@ -63,5 +63,23 @@ namespace ShopAPI.Controllers
             TempData["status"] = "Save Successfully";
             return RedirectToAction("Index");
         }
+        public ActionResult Edit(int id)
+        {
+            HttpResponseMessage respone = GlobalVariable.WebApiClient.GetAsync("Customers/" + id.ToString()).Result;
+            Customer cus = respone.Content.ReadAsAsync<Customer>().Result;
+            return View(cus);
+        }
+        [HttpPut]
+        public ActionResult Edit(int id, Customer cus)
+        {
+            HttpResponseMessage respone = GlobalVariable.WebApiClient.PutAsJsonAsync<Customer>("Customers/" + id.ToString(),cus).Result;
+            if (respone.IsSuccessStatusCode)
+            {
+                TempData["status"] = "Save Successfully";
+                return RedirectToAction("Index");
+            }
+            TempData["status"] = "Create Fail";
+            return RedirectToAction("Index");
+        }
     }
 }

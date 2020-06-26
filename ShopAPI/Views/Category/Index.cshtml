@@ -9,7 +9,7 @@
 <h2 class="text-center font-weight-bold">Category</h2>
 
 <p>
-    <button class="btn btn-dark"><i class="fa fa-plus-circle"></i> @Html.ActionLink("Create New", "Create")</button>
+    <button class="btn btn-dark"><i class="fa fa-plus-circle"></i> @Html.ActionLink("Create New", "Create",null, new {@style = "color: white; text-align: center;"})</button>
 </p>
 <table class="table table-dark table-hover table-borderless table-striped">
     <thead class="thead-light">
@@ -39,9 +39,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CatID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CatID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CatID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.CatID },new {@style = "color: white;" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CatID },new {@style = "color: white;" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CatID },new {@style = "color: white;" })
             </td>
         </tr>
     }
@@ -55,9 +55,9 @@
             var status = '@TempData["status"]'
             if (status != '')
             {
-                if (status == 'Save Successfully')
+                if (status == 'Save Successfully' || status == 'Create Successfully')
                     alertify.success(status);
-                else if (status == 'Delete Fail')
+                else if (status == 'Delete Fail' || status == 'Create Fail' || status == 'Save Error')
                     alertify.error(status);
                 else
                     alertify.success(status);

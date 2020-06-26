@@ -51,52 +51,41 @@ namespace webapi.Controllers
 
         // PUT: api/Categories/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCategory(int id, Category category)
+        public IHttpActionResult PutCategory(int id, CategoryViewModel category)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.CategoryID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(category).State = EntityState.Modified;
-
-            try
-            {
+          
+            Category cat = new Category();
+            cat.CategoryID = category.CatID;
+            cat.CategoryName = category.CatName;
+            cat.Description = category.Description;
+            db.Entry(cat).State = EntityState.Modified;
                 db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+           
 
-            return StatusCode(HttpStatusCode.NoContent);
+            //return StatusCode(HttpStatusCode.NoContent);
+            return Ok();
         }
 
         // POST: api/Categories
-        [ResponseType(typeof(Category))]
-        public IHttpActionResult PostCategory(Category category)
+        [ResponseType(typeof(CategoryViewModel))]
+        public IHttpActionResult PostCategory(CategoryViewModel category)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            db.Categories.Add(category);
+            Category cat = new Category();
+            cat.CategoryName = category.CatName;
+            cat.Description = category.Description;
+            db.Categories.Add(cat);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.CategoryID }, category);
+            return CreatedAtRoute("DefaultApi", new { id = cat.CategoryID }, category);
         }
 
         // DELETE: api/Categories/5
