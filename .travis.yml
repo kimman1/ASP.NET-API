@@ -1,4 +1,7 @@
 language: csharp 
 solution: ./webapi/webapi.sln 
+sudo: required
+mono: latest
+dotnet: latest
 script: 
   - xbuild /p:Configuration=Release ./webapi/webapi.sln
