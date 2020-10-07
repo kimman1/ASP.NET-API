@@ -1,10 +1,4 @@
-language: csharp
-solution: ./webapi/webapi.sln
-
-install:
-    - nuget restore ./webapi/webapi.sln
-  - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
-script:
-  - msbuild /p:Configuration=Release webapi.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./MyProject.Tests/bin/Release/MyProject.Tests.dll
-
+language: csharp 
+solution: ./webapi/webapi.sln 
+script: 
+  - xbuild /p:Configuration=Release ./webapi/webapi.sln
